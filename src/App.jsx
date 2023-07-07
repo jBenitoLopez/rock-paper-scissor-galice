@@ -2,33 +2,49 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import Score from './components/Score'
+import Hand from './components/Hand'
+import Button from './components/Button'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(-1)
 
+  // variables
+  /*
+    --score--
+    scoreCounter
+
+    --componente-main--
+    ----componente-hand x3--
+    --
+
+  */
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='app'>
+      <div className='header'>
+        <div className='header__title'>
+          ROECK PAPER SCISSORS
+        </div>
+        <div className='header__score'>
+          <Score counter={count} />
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className='main'>
+        <div className='main_hand'>
+          <Hand title='PAPER' color='blue' img='' handlerClick={() => { setCount(count + 1) }} />
+        </div>
+        <div className='main_hand'>
+          <Hand title='SCISSORS' color='blue' img='' handlerClick={() => { setCount(count + 1) }} />
+        </div>
+        <div className='main_hand'>
+          <Hand title='ROECK' color='blue' img='' handlerClick={() => { setCount(count + 1) }} />
+        </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <div className='footer'>
+        <Button title='RESET' handlerClick={() => { setCount(0) }} />
+        <Button title='RULES' />
+      </div>
+    </div>
   )
 }
 

@@ -1,0 +1,14 @@
+.hand__container {
+  font-size: 1.2rem;
+  color: orange;
+}
+
+.main {
+  display: flex;
+
+}
+
+.main_hand {
+  flex-grow: 1;
+  height: 1rem;
+}
