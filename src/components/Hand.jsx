@@ -1,10 +1,10 @@
 import '../assets/css/hand.css'
 
-function Hand({ title, color, img, handlerClick }) {
+function Hand({ code, color, img, handlerClick }) {
   return (
-    <div className='hand__container' onClick={handlerClick}>
-      <h2>{title}</h2>
-      <img src={img} alt={title} />
+    <div className='hand__container' onClick={() => { handlerClick(code) }}>
+      <h2>{code.toUpperCase()}</h2>
+      <img src={img} alt={code} />
     </div>
 
   )
