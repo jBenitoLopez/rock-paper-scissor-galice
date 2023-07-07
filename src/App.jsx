@@ -33,38 +33,29 @@ const config = {
 const keyList = Object.keys(config);
 const delay = 500;
 
+const initialDecission = {
+  human: undefined,
+  robot: undefined
+};
+
 function App() {
   const [count, setCount] = useState(-1)
-  const [humanDecission, setHumanDecission] = useState(undefined);
-  const [robotDecission, setRobotDecission] = useState(undefined);
+  const [decission, setDecission] = useState({ ...initialDecission });
 
-  console.log(`[INIT] Human decission ${humanDecission}`);
-
-  // variables
-  /*
-    --score--
-    scoreCounter
-
-    --componente-main--
-    ----componente-hand x3--
-    --
-
-  */
   function endGame(value) {
+    console.log('setDecission');
+    setDecission({ ...initialDecission });
+    console.log('setCount');
     setCount(count + value);
-    setHumanDecission(undefined);
-    setRobotDecission(undefined);
   }
 
   function checkResult() {
-    console.log(`Robot decission ${robotDecission}`);
-    console.log(`Human decission ${humanDecission}`);
-    console.log('--------------------')
-    const actualDecission = config[robotDecission];
-    if (humanDecission === actualDecission) {
+    console.log(decission);
+    const actualDecission = config[decission.robot];
+    if (decission.human === actualDecission) {
       alert('tablas');
       endGame(0);
-    } else if (actualDecission.wins.includes(humanDecission)) {
+    } else if (actualDecission.wins.includes(decission.human)) {
       alert('Robot gana');
       endGame(-1);
     } else {
@@ -74,11 +65,13 @@ function App() {
   }
 
   function fromChild(decission) {
-    setHumanDecission(decission);
-    setRobotDecission(keyList.at(Math.floor(Math.random() * 1029218) % keyList.length));
+    setDecission({
+      human: decission,
+      robot: keyList.at(Math.floor(Math.random() * 1029218) % keyList.length)
+    });
   }
 
-  if (robotDecission && humanDecission) {
+  if (decission.robot && decission.human) {
     setTimeout(() => checkResult(), delay);
   }
 
@@ -86,25 +79,16 @@ function App() {
     <div className='app'>
       <div className='header'>
         <div className='header__title'>
-          ROECK PAPER SCISSORS
+          ROCK PAPER SCISSORS
         </div>
         <div className='header__score'>
           <Score counter={count} />
         </div>
       </div>
       <div className='main'>
-        {!humanDecission && <>
-          {keyList.map(hand => <Hand key={hand} {...config[hand]} handlerClick={fromChild} />)}
-          {/* <div className='main_hand'>
-            <Hand title='PAPER' color='blue' img='' handlerClick={fromChild} />
-          </div>
-          <div className='main_hand'>
-            <Hand title='SCISSORS' color='blue' img='' handlerClick={fromChild} />
-          </div>
-          <div className='main_hand'>
-            <Hand title='ROCK' color='blue' img='' handlerClick={fromChild} />
-          </div> */}
-        </>
+        {
+          !decission.human &&
+          keyList.map(hand => <Hand key={hand} {...config[hand]} handlerClick={fromChild} />)
         }
       </div>
       <div className='footer'>
